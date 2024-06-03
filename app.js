@@ -49,11 +49,17 @@ const JOBS = [
     {'name': 'Backend Developer', 'salary': 59000, 'country': 'Spain', 'skills': ['Java', 'Spring', 'Microservices']}
 ];
 
+function convertSkillsToXML(skillsArray) {
+    return skillsArray.reduce((xmlString, skill) => {
+        return xmlString + `<skill>${skill}</skill>`;
+    }, '<skills>') + '</skills>';
+}
+
 app.listen(port,()=> {
     console.log('listening port ' + port);
 })
 
-app.get('/jobs', (req,res)=> {
+app.get('/jobs', (req,res) => {
     try {
         let name = req.query.name;
         let salary_min = req.query.salary_min;
@@ -67,9 +73,16 @@ app.get('/jobs', (req,res)=> {
                     && (salary_max === undefined || job.salary <= salary_max)
                     && (country === undefined || job.country.toLowerCase() === country.toLowerCase())
                 )
-            ).map(
-                job => [job.name, job.salary, job.country, job.skills]
-            )
+            ).reduce((groupedJobs, job) => {
+                const country = job.country;
+                if (!groupedJobs[country]) {
+                    groupedJobs[country] = [];
+                }
+                groupedJobs[country].push(
+                    [job.name, job.salary, job.country, convertSkillsToXML(job.skills)]
+                );
+                return groupedJobs;
+            }, {})
         );
     } catch (error) {
         return res.status(400).json({status: 400, message: error.toString()})
