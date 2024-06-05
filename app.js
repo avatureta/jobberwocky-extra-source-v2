@@ -79,7 +79,7 @@ app.get('/jobs', (req,res) => {
                     groupedJobs[country] = [];
                 }
                 groupedJobs[country].push(
-                    [job.name, job.salary, job.country, convertSkillsToXML(job.skills)]
+                    [job.name, job.salary, convertSkillsToXML(job.skills)]
                 );
                 return groupedJobs;
             }, {})
