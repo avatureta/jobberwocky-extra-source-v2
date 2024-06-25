@@ -20,12 +20,17 @@ Now, you can access `http://localhost:8081/jobs`, which can receive the followin
 
 Example: `http://localhost:8081/jobs?name=Java`
 
-The API response is JSON-formatted and contains a list of jobs, where each job is represented by an array of four positions (name, salary, country, skills). 
+The API response is JSON-formatted and contains a list of jobs, grouped by country, where each job is represented by an array of three positions (name, salary, skills). 
 
 Example:
 ```json
-[
-    ["Developer", 30000, "Argentina", ["OOP", "PHP", "MySQL"]],
-    ["DBA", 35000, "Spain", ["MySQL", "Percona", "Bash"]]
-]
+{
+    "Argentina": [
+        ["Developer", 30000, ["OOP", "PHP"]],
+        ["Senior Developer", 40000, ["OOP", "PHP", "MySQL"]]
+    ],
+    "Spain": [
+        ["DBA", 35000, "Spain", ["MySQL", "Percona", "Bash"]]
+    ]
+}
 ```
