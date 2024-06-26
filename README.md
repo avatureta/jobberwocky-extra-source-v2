@@ -2,6 +2,9 @@
 
 This API provides a single endpoint which returns a list of jobs that can be filtered using optional request's parameters.
 
+> [!CAUTION]  
+> This project must be used as-is. It cannot be modified to make it easier to consume.
+
 First, build and execute the application:
 
 ```bash
